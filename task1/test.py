@@ -1,3 +1,4 @@
+import itertools
 import subprocess
 import os
 import os.path
@@ -35,10 +36,12 @@ def run_test(inputs, outputs):
     output = proc.stdout.read().decode('UTF-8').splitlines()
     if len(output) != len(outputs):
         return 'Expected {} outputs, got {}'.format(len(outputs), len(output))
-    for expected, got, index in zip(outputs, output, range(1)):
+    for expected, got, index in zip(outputs, output, itertools.count()):
         got = got.strip()
+        if expected == 'Eval error: ...' and got.startswith('Eval error'):
+            continue
         if expected != got:
-            return (index, expected, got)
+            return (index + 1, expected, got)
     return None
 
 def get_test_list():
@@ -53,16 +56,24 @@ def run_and_report(test):
     result = run_test(inputs, outputs)
     if result is None:
         print('ok')
+        return True
     elif isinstance(result, str):
         print('FAIL')
         print(result)
+        return False
     else:
         index, expected, got = result
         print('FAIL')
         print('Mismatch in output #{}'.format(index))
         print('Expected: {}'.format(expected))
         print('Got: {}'.format(got))
+        return False
 
 if __name__ == '__main__':
+    success, fail = 0, 0
     for test in get_test_list():
-        run_and_report(test)
+        if run_and_report(test):
+            success += 1
+        else:
+            fail += 1
+    print('Tests passed: {}/{}'.format(success, success + fail))
