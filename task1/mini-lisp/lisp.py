@@ -1,3 +1,6 @@
+import sys
+
+
 class ParseError(Exception):
     def __init__(self, message):
         super(ParseError, self).__init__(message)
@@ -306,10 +309,11 @@ def make_env():
     return env
 
 
-def run_repl():
+def run_repl(print_prompt):
     env = make_env()
     while True:
-        print('> ', end='')
+        if print_prompt:
+            print('> ', end='')
         try:
             source = input()
         except EOFError:
@@ -328,5 +332,5 @@ def run_repl():
 
 
 if __name__ == '__main__':
-    run_repl()
-
+    print_prompt = all(a != '--no-prompt' for a in sys.argv)
+    run_repl(print_prompt)
