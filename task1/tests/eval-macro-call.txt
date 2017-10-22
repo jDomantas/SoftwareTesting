@@ -1,0 +1,8 @@
+> ((macro (x) x) 1)
+1
+> ((macro (x y) y) 1 2)
+2
+> ((macro (x) (car x)) (1 2))
+1
+> ((macro (x) x) (+ 1 2))
+3

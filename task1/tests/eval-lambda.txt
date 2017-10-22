@@ -1,0 +1,4 @@
+> (lambda (x) x)
+(lambda (x) x <env>)
+> (lambda (x . y) (cdr (+ x y)))
+(lambda (x . y) (cdr (+ x y)) <env>)

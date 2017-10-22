@@ -1,0 +1,6 @@
+# we make use of the fact that there are
+# builtins in the global environment
+> +
+<builtin +>
+> eq?
+<builtin eq?>

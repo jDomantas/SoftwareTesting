@@ -1,0 +1,18 @@
+> (eq? 1 2)
+()
+> (eq? 1 1)
+t
+> (eq? 'a 'a)
+t
+> (eq? (+ 1 2) 3)
+t
+> (eq? '(1 2 a) '(1 2 a))
+t
+> (eq? '(1 2 ()) '(1 2 3))
+()
+> (eq?)
+Eval error: ...
+> (eq? 1)
+Eval error: ...
+> (eq? 1 2 3)
+Eval error: ...

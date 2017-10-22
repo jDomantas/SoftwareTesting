@@ -1,0 +1,5 @@
+# we can only get an environment by
+# taking it out of a closure
+# (lambda () ()) ==> (lambda () () <env>)
+> (eval (car (cdr (cdr (cdr (lambda () ()))))))
+Eval error: ...

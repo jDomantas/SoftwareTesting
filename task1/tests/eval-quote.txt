@@ -1,0 +1,6 @@
+> (quote (1 2 3))
+(1 2 3)
+> (quote a)
+a
+> (quote (quote (quote quote)))
+(quote (quote quote))

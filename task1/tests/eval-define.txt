@@ -1,0 +1,4 @@
+> (define previously-undefined-symbol 3)
+3
+> previously-undefined-symbol
+3

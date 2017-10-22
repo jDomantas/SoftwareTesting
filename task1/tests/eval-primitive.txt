@@ -1,0 +1,4 @@
+# `+` will eval to `<builtin +>`, which we
+# force to be evaluated again with `eval`
+> (eval +)
+Eval error: ...

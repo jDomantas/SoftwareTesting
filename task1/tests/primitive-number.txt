@@ -1,0 +1,10 @@
+> (number? 1)
+t
+> (number? 'a)
+()
+> (number? (cons 1 2))
+()
+> (number?)
+Eval error: ...
+> (number? 1 2)
+Eval error: ...
