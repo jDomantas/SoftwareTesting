@@ -2,7 +2,7 @@
 
 This document describes a small dialect of lisp, which we will call "mini-lisp".
 
-## Language terms
+## 1. Language terms
 
 Language has 5 core types of terms:
 * Number
@@ -14,9 +14,9 @@ Language has 5 core types of terms:
 
 Terms can form lists: term is a list if it is Nil, or a pair of any term and list.
 
-## Syntax
+## 2. Syntax
 
-### Numbers
+### 2.1. Numbers
 
 Numbers are written as a sequence of digits.
 
@@ -26,7 +26,7 @@ Numbers are written as a sequence of digits.
 0  4392  03059  203
 ```
 
-### Symbols
+### 2.2. Symbols
 
 Symbols are any sequence of characters, except `(`, `)`, and whitespace. Symbols also cannot consist only of digits, and cannot be just `.`.
 
@@ -36,7 +36,7 @@ Symbols are any sequence of characters, except `(`, `)`, and whitespace. Symbols
 abc  -5  can.contain:punctuation!
 ```
 
-### Nil
+### 2.3. Nil
 
 Nil is written as `()`. Whitespace between parentheses is allowed.
 
@@ -46,7 +46,7 @@ Nil is written as `()`. Whitespace between parentheses is allowed.
 ()  ( )
 ```
 
-### Pairs
+### 2.4. Pairs
 
 Pairs are written as `(a . b)`, where `a` and `b` are terms. There can be multiple terms before the dot, which is a syntaxic sugar for list-like construct:
 
@@ -60,15 +60,15 @@ Pairs are written as `(a . b)`, where `a` and `b` are terms. There can be multip
 (1 . 2)  (a . ())
 ```
 
-### Environments
+### 2.5. Environments
 
 Environments do not have a specific syntaxic representation for input. When displaying results environmets will be displayed as `<env>`.
 
-### Primitives
+### 2.6. Primitives
 
 Primitives do not have a specific syntaxic representation for input. When displaying results primitives will be displayed as `<primitive {name}>` (e.g. `<primitive cons>`).
 
-### Lists
+### 2.7. Lists
 
 Lists are written as `(a b c)`, where `a`, `b`, and `c` are terms. Lists can be of any non-negative length. Note that list of length zero has the same syntaxic representation as Nil, making syntaxic sugar consistent.
 
@@ -78,7 +78,7 @@ Lists are written as `(a b c)`, where `a`, `b`, and `c` are terms. Lists can be 
 (a b-c () (1 . 2))  (1)
 ```
 
-### Additional syntaxic sugar
+### 2.8. Additional syntaxic sugar
 
 `'a` is parsed as `(quote a)` where a is a term.
 
@@ -88,9 +88,9 @@ Lists are written as `(a b c)`, where `a`, `b`, and `c` are terms. Lists can be 
 '(1 2 3)  ==>  (quote (1 2 3))
 ```
 
-## Evaluation
+## 3. Evaluation
 
-### Evaluating terms
+### 3.1. Evaluating terms
 
 Evaluating a term in an environment proceeds as follows:
 
@@ -102,7 +102,7 @@ Evaluating a term in an environment proceeds as follows:
 * If term is a primitive, error is reported.
 * If term is a list, it is evaluated either as a special form, or as a macro or function call.
 
-### Evaluating lists
+### 3.2. Evaluating lists
 
 If first item of a list is one of the listed symbols, list is evaluated as a special form.
 
@@ -123,9 +123,9 @@ Otherwise first element ("callee") of the list is evaluated.
     Then a macro call is evaluated.
 * Otherwise, an error is reported.
 
-### Evaluating Special forms
+### 3.3. Evaluating Special forms
 
-#### Quote
+#### 3.3.1. Quote
 
 Quote takes exactly one argument. It returns the argument unchanged.
 
@@ -133,7 +133,7 @@ Quote takes exactly one argument. It returns the argument unchanged.
 (quote (1 a))  ==>  (1 a)
 ```
 
-#### Cond
+#### 3.3.2. Cond
 
 Every argument to `cond` must be a list of two terms. It evaluates first item of each list in order until it evaluates to some non-Nil value. Then it returns the result of evaluating second element of that list. If no argument is matched, whole expression evaluates to Nil.
 
@@ -141,7 +141,7 @@ Every argument to `cond` must be a list of two terms. It evaluates first item of
 (cond (() 1) (2 2))  ==>  2
 ```
 
-#### Eval
+#### 3.3.3. Eval
 
 Eval takes exactly one argument, and evaluates it twice in the current environment.
 
@@ -149,7 +149,7 @@ Eval takes exactly one argument, and evaluates it twice in the current environme
 (eval ''a)  ==>  a
 ```
 
-#### Lambda
+#### 3.3.4. Lambda
 
 Lambda takes exactly two arguments, and constructs the following structure:
 
@@ -159,7 +159,7 @@ Lambda takes exactly two arguments, and constructs the following structure:
 
 where `arg1` and `arg2` are respectively first and second arguments, and `current-env` is current environment.
 
-#### Macro
+#### 3.3.5. Macro
 
 Macro takes exactly two arguments, and constructs the following structure:
 
@@ -169,7 +169,7 @@ Macro takes exactly two arguments, and constructs the following structure:
 
 where `arg1` and `arg2` are respectively first and second arguments, and `current-env` is current environment.
 
-#### Define
+#### 3.3.6. Define
 
 Define takes exactly two arguments, of which the first one must be a symbol. It evaluates second argument, and modifies the global environment by adding a mapping from the symbol to result value. Expression evaluates to the added value.
 
@@ -177,11 +177,11 @@ Define takes exactly two arguments, of which the first one must be a symbol. It 
 (define a '(1 2 3))
 ```
 
-### Evaluating primitive calls
+### 3.3.7. Evaluating primitive calls
 
 Primitive functions take a list of arguments and give some result. Their behaviour is listed in the list below.
 
-### Evaluating lambda calls
+### 3.3.8. Evaluating lambda calls
 
 First, an argument list is matched against given parameters:
 * If parameter list is Nil, it matches empty parameter list.
@@ -196,7 +196,7 @@ The environment stored in 4th element is extended with matches. If same symbol i
 
 Then the body is evaluated with this new extended environment, and returned as a result.
 
-### Evaluating lambda calls
+### 3.3.9. Evaluating lambda calls
 
 Argument matching works the same way as lambda calls.
 
@@ -214,7 +214,7 @@ is the same as evaluating this, where `y` is lambda corresponding to the value o
 (eval (y (quote a) (quote b) (quote c)))
 ```
 
-## Built-in primitives
+## 4. Built-in primitives
 
 Initialy each primitive will be bound in the global env to its name, but user code can override the bindings.
 
@@ -237,7 +237,7 @@ Initialy each primitive will be bound in the global env to its name, but user co
 | `pair?`   | 1           | Returns symbol `t` if arg is pair, Nil otherwise.                      |
 | `nil?`    | 1           | Returns symbol `t` if arg is Nil, Nil otherwise.                       |
 
-## Term equality
+## 5. Term equality
 
 Two terms are equal iff any of the following:
 * Both are numbers with equal values.
