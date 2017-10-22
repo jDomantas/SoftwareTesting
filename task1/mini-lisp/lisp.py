@@ -218,14 +218,6 @@ def apply(f, args, parent_env):
         env = Env(f[3])
         define_list(f[1], args, env)
         return eval(f[2], env)
-    elif isinstance(f, tuple) and f[0] == 'macro':
-        f = to_python_list(f)
-        if len(f) != 4:
-            raise EvalError('malformed macro closure')
-        env = Env(f[3])
-        define_list(f[1], to_lisp_list(args), env)
-        result = eval(f[2], env)
-        return eval(result, parent_env)
     else:
         raise EvalError('calling non-function: {}'.format(f))
 
@@ -249,10 +241,6 @@ def eval(expr, env):
             if len(args) != 2:
                 raise EvalError('lambda got {} args'.format(len(args)))
             return ('lambda', (args[0], (args[1], (env, None))))
-        elif expr[0] == 'macro':
-            if len(args) != 2:
-                raise EvalError('macro got {} args'.format(len(args)))
-            return ('macro', (args[0], (args[1], (env, None))))
         elif expr[0] == 'eval':
             if len(args) != 1:
                 raise EvalError('eval got {} args'.format(len(args)))

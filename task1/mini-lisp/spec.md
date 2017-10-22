@@ -100,13 +100,13 @@ Evaluating a term in an environment proceeds as follows:
 * If term is a pair that is not a valid list, error is reported.
 * If term is an environment, error is reported.
 * If term is a primitive, error is reported.
-* If term is a list, it is evaluated either as a special form, or as a macro or function call.
+* If term is a list, it is evaluated either as a special form, or as a function call.
 
 ### 3.2. Evaluating lists
 
 If first item of a list is one of the listed symbols, list is evaluated as a special form.
 
-Special forms: `quote`, `cond`, `eval`, `lambda`, `macro`, `define`.
+Special forms: `quote`, `cond`, `eval`, `lambda`, `define`.
 
 Otherwise first element ("callee") of the list is evaluated.
 
@@ -116,11 +116,6 @@ Otherwise first element ("callee") of the list is evaluated.
     * Second element is argument list. Argument list is Nil, a symbol, or a pair of a symbol and an argument list.
     * Fourth element is an environment. This term is called "closure environment".
     Then remaining elements are evaluated, and then a function call is evaluated.
-* If the result is a list that meets the following requirements:
-    * First element is symbol `macro`.
-    * Second element is argument list. Argument list is Nil, a symbol, or a pair of a symbol and an argument list.
-    * Fourth element is an environment. This term is called "closure environment".
-    Then a macro call is evaluated.
 * Otherwise, an error is reported.
 
 ### 3.3. Evaluating Special forms
@@ -159,17 +154,7 @@ Lambda takes exactly two arguments, and constructs the following structure:
 
 where `arg1` and `arg2` are respectively first and second arguments, and `current-env` is current environment.
 
-#### 3.3.5. Macro
-
-Macro takes exactly two arguments, and constructs the following structure:
-
-```
-(macro arg1 arg2 current-env)
-```
-
-where `arg1` and `arg2` are respectively first and second arguments, and `current-env` is current environment.
-
-#### 3.3.6. Define
+#### 3.3.5. Define
 
 Define takes exactly two arguments, of which the first one must be a symbol. It evaluates second argument, and modifies the global environment by adding a mapping from the symbol to result value. Expression evaluates to the added value.
 
@@ -177,11 +162,11 @@ Define takes exactly two arguments, of which the first one must be a symbol. It 
 (define a '(1 2 3))
 ```
 
-### 3.3.7. Evaluating primitive calls
+### 3.3.6. Evaluating primitive calls
 
 Primitive functions take a list of arguments and give some result. Their behaviour is listed in the list below.
 
-### 3.3.8. Evaluating lambda calls
+### 3.3.7. Evaluating lambda calls
 
 First, an argument list is matched against given parameters:
 * If parameter list is Nil, it matches empty parameter list.
@@ -195,24 +180,6 @@ If there is a mismatch, an error is reported.
 The environment stored in 4th element is extended with matches. If same symbol is matched multiple times, it must get the value from the right-most match.
 
 Then the body is evaluated with this new extended environment, and returned as a result.
-
-### 3.3.9. Evaluating macro calls
-
-Argument matching works the same way as lambda calls.
-
-When binding arguments, they are bound unevaluated. After evaluating body, the resulting value is evaluated again in the caller environment.
-
-In essense, calling `x` where `x` is a macro:
-
-```
-(x a b c)
-```
-
-is the same as evaluating this, where `y` is lambda corresponding to the value of `x`:
-
-```
-(eval (y (quote a) (quote b) (quote c)))
-```
 
 ## 4. Built-in primitives
 

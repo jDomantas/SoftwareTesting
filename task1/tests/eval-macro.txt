@@ -1,4 +1,0 @@
-> (macro (x) x)
-(macro (x) x <env>)
-> (macro (x . y) (cdr (+ x y)))
-(macro (x . y) (cdr (+ x y)) <env>)
