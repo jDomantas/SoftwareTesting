@@ -196,7 +196,7 @@ The environment stored in 4th element is extended with matches. If same symbol i
 
 Then the body is evaluated with this new extended environment, and returned as a result.
 
-### 3.3.9. Evaluating lambda calls
+### 3.3.9. Evaluating macro calls
 
 Argument matching works the same way as lambda calls.
 
@@ -218,24 +218,17 @@ is the same as evaluating this, where `y` is lambda corresponding to the value o
 
 Initialy each primitive will be bound in the global env to its name, but user code can override the bindings.
 
-| Name      | Arguments   | Description                                                            |
-| --------- | ----------- | ---------------------------------------------------------------------- |
-| `car`     | 1 (pair)    | Returns first element of the pair.                                     |
-| `cdr`     | 1 (pair)    | Returns second element of the pair.                                    |
-| `cons`    | 2           | Builds a pair from the given elements.                                 |
-| `+`       | numbers     | Returns sum of arguments, 0 if no arguments given.                     |
-| `-`       | numbers     | Returns first argument minus sum of the rest, 0 if no arguments given. |
-| `*`       | numbers     | Returns product of arguments, 1 if no arguments given.                 |
-| `/`       | numbers     | Corresponds to `-`, but with division. 1 if no arguments given.        |
-| `<`       | 2 (numbers) | Returns symbol `t` if first arg is less than second, Nil otherwise.    |
-| `>`       | 2 (numbers) | Corresponds to `<`.                                                    |
-| `<=`      | 2 (numbers) | Corresponds to `<`.                                                    |
-| `>=`      | 2 (numbers) | Corresponds to `<`.                                                    |
-| `eq?`     | 2           | Returns symbol `t` if args are equal, Nil otherwise.                   |
-| `number?` | 1           | Returns symbol `t` if arg is number, Nil otherwise.                    |
-| `symbol?` | 1           | Returns symbol `t` if arg is symbol, Nil otherwise.                    |
-| `pair?`   | 1           | Returns symbol `t` if arg is pair, Nil otherwise.                      |
-| `nil?`    | 1           | Returns symbol `t` if arg is Nil, Nil otherwise.                       |
+| Name      | Arguments   | Description                                           |
+| --------- | ----------- | ----------------------------------------------------- |
+| `car`     | 1 (pair)    | Returns first element of the pair.                    |
+| `cdr`     | 1 (pair)    | Returns second element of the pair.                   |
+| `cons`    | 2           | Builds a pair from the given elements.                |
+| `+`       | numbers     | Returns sum of arguments, 0 if no arguments given.    |
+| `eq?`     | 2           | Returns symbol `t` if args are equal, Nil otherwise.  |
+| `number?` | 1           | Returns symbol `t` if arg is number, Nil otherwise.   |
+| `symbol?` | 1           | Returns symbol `t` if arg is symbol, Nil otherwise.   |
+| `pair?`   | 1           | Returns symbol `t` if arg is pair, Nil otherwise.     |
+| `nil?`    | 1           | Returns symbol `t` if arg is Nil, Nil otherwise.      |
 
 ## 5. Term equality
 
