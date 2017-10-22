@@ -20,7 +20,7 @@ def read_test(filename):
                 outputs.append(line)
     return inputs, outputs
 
-def run_test(inputs, outputs):
+def run_interpreter(inputs):
     proc = subprocess.Popen(
         ['python', 'mini-lisp/lisp.py', '--no-prompt'],
         stdin = subprocess.PIPE,
@@ -33,16 +33,23 @@ def run_test(inputs, outputs):
     exit_code = proc.wait()
     if exit_code != 0:
         return 'Interpreter exited with code {}'.format(exit_code)
-    output = proc.stdout.read().decode('UTF-8').splitlines()
-    if len(output) != len(outputs):
-        return 'Expected {} outputs, got {}'.format(len(outputs), len(output))
-    for expected, got, index in zip(outputs, output, itertools.count()):
+    return proc.stdout.read().decode('UTF-8').splitlines()
+
+def check_outputs(expected, got):
+    if len(expected) != len(got):
+        return ['Expected {} outputs, got {}'.format(len(expected), len(got))]
+    errors = []
+    for expected, got, index in zip(expected, got, itertools.count()):
         got = got.strip()
         if expected == 'Eval error: ...' and got.startswith('Eval error'):
             continue
         if expected != got:
-            return (index + 1, expected, got)
-    return None
+            errors.append(
+                'Mismatch in output #{}\nExpected: {}\nGot: {}'.format(
+                    index + 1,
+                    expected,
+                    got))
+    return errors
 
 def get_test_list():
     def is_file(name):
@@ -53,21 +60,21 @@ def get_test_list():
 def run_and_report(test):
     print('test "{}" ... '.format(test), end = '')
     inputs, outputs = read_test(test)
-    result = run_test(inputs, outputs)
-    if result is None:
-        print('ok')
-        return True
-    elif isinstance(result, str):
+    got = run_interpreter(inputs)
+    if isinstance(got, str):
         print('FAIL')
-        print(result)
+        print(got)
         return False
     else:
-        index, expected, got = result
-        print('FAIL')
-        print('Mismatch in output #{}'.format(index))
-        print('Expected: {}'.format(expected))
-        print('Got: {}'.format(got))
-        return False
+        errors = check_outputs(outputs, got)
+        if len(errors) == 0:
+            print('ok')
+            return True
+        else:
+            print('FAIL')
+            for err in errors:
+                print(err)
+            return False
 
 if __name__ == '__main__':
     success, fail = 0, 0
