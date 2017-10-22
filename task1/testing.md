@@ -20,32 +20,32 @@ Pateikiama lentelė nurodo kuriuos specifikacijos skyrius atitinka kurie testai.
 
 | Testas                 | 3.1. | 3.2. | 3.3.1. | 3.3.2. | 3.3.3. | 3.3.4. | 3.3.5. | 3.3.6. | 3.3.7. | 4. |
 | ---------------------- |:----:|:----:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|:--:|
-| `eval-bad-cond`        |      |      |        | X      |        |        |        |        |        |    |
-| `eval-bad-eval`        |      |      |        |        | X      |        |        |        |        |    |
-| `eval-bad-lambda-call` |      |      |        |        |        |        |        |        | X      |    |
-| `eval-bad-lambda`      |      |      |        |        |        | X      |        |        |        |    |
-| `eval-bad-quote`       |      |      | X      |        |        |        |        |        |        |    |
-| `eval-cond`            |      |      |        | X      |        |        |        |        |        |    |
-| `eval-define`          |      |      |        |        |        |        | X      |        |        |    |
+| `eval-bad-cond`        |      | X    |        | X      |        |        |        |        |        |    |
+| `eval-bad-eval`        |      | X    |        |        | X      |        |        |        |        |    |
+| `eval-bad-lambda-call` |      | X    |        |        |        |        |        |        | X      |    |
+| `eval-bad-lambda`      |      | X    |        |        |        | X      |        |        |        |    |
+| `eval-bad-quote`       |      | X    | X      |        |        |        |        |        |        |    |
+| `eval-cond`            |      | X    |        | X      |        |        |        |        |        |    |
+| `eval-define`          |      | X    |        |        |        |        | X      |        |        |    |
 | `eval-environment`     | X    |      |        |        |        |        |        |        |        |    |
-| `eval-eval`            |      |      |        |        | X      |        |        |        |        |    |
-| `eval-lambda-call`     |      |      |        |        |        |        |        |        | X      |    |
-| `eval-lambda`          |      |      |        |        |        | X      |        |        |        |    |
+| `eval-eval`            |      | X    |        |        | X      |        |        |        |        |    |
+| `eval-lambda-call`     |      | X    |        |        |        |        |        |        | X      |    |
+| `eval-lambda`          |      | X    |        |        |        | X      |        |        |        |    |
 | `eval-nil`             | X    |      |        |        |        |        |        |        |        |    |
 | `eval-non-list`        | X    |      |        |        |        |        |        |        |        |    |
 | `eval-number`          | X    |      |        |        |        |        |        |        |        |    |
 | `eval-primitive`       | X    |      |        |        |        |        |        |        |        |    |
-| `eval-quote`           |      |      | X      |        |        |        |        |        |        |    |
+| `eval-quote`           |      | X    | X      |        |        |        |        |        |        |    |
 | `eval-symbol`          | X    |      |        |        |        |        |        |        |        |    |
-| `primitive-+`          |      |      |        |        |        |        |        | X      |        | X  |
-| `primitive-car`        |      |      |        |        |        |        |        | X      |        | X  |
-| `primitive-cdr`        |      |      |        |        |        |        |        | X      |        | X  |
-| `primitive-cons`       |      |      |        |        |        |        |        | X      |        | X  |
-| `primitive-eq`         |      |      |        |        |        |        |        | X      |        | X  |
-| `primitive-nil`        |      |      |        |        |        |        |        | X      |        | X  |
-| `primitive-number`     |      |      |        |        |        |        |        | X      |        | X  |
-| `primitive-pair`       |      |      |        |        |        |        |        | X      |        | X  |
-| `primitive-symbol`     |      |      |        |        |        |        |        | X      |        | X  |
+| `primitive-+`          |      | X    |        |        |        |        |        | X      |        | X  |
+| `primitive-car`        |      | X    |        |        |        |        |        | X      |        | X  |
+| `primitive-cdr`        |      | X    |        |        |        |        |        | X      |        | X  |
+| `primitive-cons`       |      | X    |        |        |        |        |        | X      |        | X  |
+| `primitive-eq`         |      | X    |        |        |        |        |        | X      |        | X  |
+| `primitive-nil`        |      | X    |        |        |        |        |        | X      |        | X  |
+| `primitive-number`     |      | X    |        |        |        |        |        | X      |        | X  |
+| `primitive-pair`       |      | X    |        |        |        |        |        | X      |        | X  |
+| `primitive-symbol`     |      | X    |        |        |        |        |        | X      |        | X  |
 
 ## 2.3. Testavimo atvejai ir rezultatai
 
