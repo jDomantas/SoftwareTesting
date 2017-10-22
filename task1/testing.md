@@ -50,3 +50,30 @@ Pateikiama lentelė nurodo kuriuos specifikacijos skyrius atitinka kurie testai.
 | `primitive-number`     |      |      |        |        |        |        |        |        | X      |        |        | X  |
 | `primitive-pair`       |      |      |        |        |        |        |        |        | X      |        |        | X  |
 | `primitive-symbol`     |      |      |        |        |        |        |        |        | X      |        |        | X  |
+
+## 2.3. Testavimo atvejai ir rezultatai
+
+Testavimo atvejo id sudarytas pagal testuojamą kalbos elementą.
+
+<< testavimo atvejų lentelės >>
+
+## 2.4. Defektų sąrašas
+
+Defekto ID sudaromas pagal taisyklę D+XX, kur XX - defekto numeris.
+
+Pagal poveikį interpretatoriaus naudojimui defektai suskirstyti į:
+* Kritinis - defektas neleidžia naudotis esminėmis interpretatoriaus funkcijomis.
+* Svarbus - defektas įtakoja esmines funkcijas, bet juo naudotis iš esmės galima.
+* Nesvarbus - defektas turi mažai įtakos interpretatoriaus naudojimui.
+
+<< defektų lentelės >>
+
+## 3. Rezultatai ir išvados
+
+???
+
+## 4. Priedai
+
+Trumpas interpretatoriaus aprašymas: [python-mini-lisp.md](mini-lisp/python-mini-lisp.md).
+
+Mini-lisp specifikacija: [spec.md](mini-lisp/spec.md).
