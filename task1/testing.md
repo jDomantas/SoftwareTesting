@@ -19,7 +19,7 @@ Interpretatorius yra testuojamas pagal specifikaciją, neišrašant atskirai det
 Pateikiama lentelė nurodo kuriuos specifikacijos skyrius atitinka kurie testai.
 
 | Testas                 | 3.1. | 3.2. | 3.3.1. | 3.3.2. | 3.3.3. | 3.3.4. | 3.3.5. | 3.3.6. | 3.3.7. | 3.3.8. | 3.3.9. | 4. |
-| ---------------------- | ---- | ---- | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | -- |
+| ---------------------- |:----:|:----:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|:--:|
 | `eval-bad-cond`        |      |      |        | X      |        |        |        |        |        |        |        |    |
 | `eval-bad-eval`        |      |      |        |        | X      |        |        |        |        |        |        |    |
 | `eval-bad-lambda-call` |      |      |        |        |        |        |        |        |        | X      |        |    |
