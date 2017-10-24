@@ -6,7 +6,7 @@ Testuojamas interpretatorius yra trumpai aprašytas [python-mini-lisp.md](mini-l
 
 Interpretatorius bus testuojamas juodos dėžės principu. Jam bus pateikiami mini-lisp termai, ir išvedami termai bus lyginami su specifikacijos nusakomu rezultatu. Kadangi interpretatoriaus vartotojo sąsaja yra labai praprasta, testai yra automatizuoti. Testas yra aprašomas paprastu formatu kaip sąrašas įvesčių ir norimų rezultatų. Testams paleisti naudojama trumpa Python programėlė kuri nuskaito testus, paleidžia interpretatorių, suveda testo įvestis, palygina išvestis, ir praneša rezultatus.
 
-Siekiant sumažinti darbo apimtį, testuojamas tik programų vykdymas (specifikacijos skyriai `3. Evaluation` ir `4. Built-in primitives`). Testavimo tikslams likusi specifikacijos dalis yra laikoma realizuota teisingai.
+Siekiant sumažinti darbo apimtį, testuojamas tik programų vykdymas (specifikacijos skyrius `3. Evaluation`). Testavimo tikslams likusi specifikacijos dalis (sintaksė ir esamos primityvios operacijos) yra laikoma realizuota teisingai.
 
 # 2. Interpretatoriaus testavimas
 
@@ -18,34 +18,25 @@ Interpretatorius yra testuojamas pagal specifikaciją, neišrašant atskirai det
 
 Pateikiama lentelė nurodo kuriuos specifikacijos skyrius atitinka kurie testai.
 
-| Testas                 | 3.1. | 3.2. | 3.3.1. | 3.3.2. | 3.3.3. | 3.3.4. | 3.3.5. | 3.3.6. | 3.3.7. | 4. |
-| ---------------------- |:----:|:----:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|:--:|
-| `eval-bad-cond`        |      | X    |        | X      |        |        |        |        |        |    |
-| `eval-bad-eval`        |      | X    |        |        | X      |        |        |        |        |    |
-| `eval-bad-lambda-call` |      | X    |        |        |        |        |        |        | X      |    |
-| `eval-bad-lambda`      |      | X    |        |        |        | X      |        |        |        |    |
-| `eval-bad-quote`       |      | X    | X      |        |        |        |        |        |        |    |
-| `eval-cond`            |      | X    |        | X      |        |        |        |        |        |    |
-| `eval-define`          |      | X    |        |        |        |        | X      |        |        |    |
-| `eval-environment`     | X    |      |        |        |        |        |        |        |        |    |
-| `eval-eval`            |      | X    |        |        | X      |        |        |        |        |    |
-| `eval-lambda-call`     |      | X    |        |        |        |        |        |        | X      |    |
-| `eval-lambda`          |      | X    |        |        |        | X      |        |        |        |    |
-| `eval-nil`             | X    |      |        |        |        |        |        |        |        |    |
-| `eval-non-list`        | X    |      |        |        |        |        |        |        |        |    |
-| `eval-number`          | X    |      |        |        |        |        |        |        |        |    |
-| `eval-primitive`       | X    |      |        |        |        |        |        |        |        |    |
-| `eval-quote`           |      | X    | X      |        |        |        |        |        |        |    |
-| `eval-symbol`          | X    |      |        |        |        |        |        |        |        |    |
-| `primitive-+`          |      | X    |        |        |        |        |        | X      |        | X  |
-| `primitive-car`        |      | X    |        |        |        |        |        | X      |        | X  |
-| `primitive-cdr`        |      | X    |        |        |        |        |        | X      |        | X  |
-| `primitive-cons`       |      | X    |        |        |        |        |        | X      |        | X  |
-| `primitive-eq`         |      | X    |        |        |        |        |        | X      |        | X  |
-| `primitive-nil`        |      | X    |        |        |        |        |        | X      |        | X  |
-| `primitive-number`     |      | X    |        |        |        |        |        | X      |        | X  |
-| `primitive-pair`       |      | X    |        |        |        |        |        | X      |        | X  |
-| `primitive-symbol`     |      | X    |        |        |        |        |        | X      |        | X  |
+| Testas                 | 3.1. | 3.2. | 3.3.1. | 3.3.2. | 3.3.3. | 3.3.4. | 3.3.5. | 3.3.6. |
+| ---------------------- |:----:|:----:|:------:|:------:|:------:|:------:|:------:|:------:|
+| `eval-bad-cond`        |      | X    |        | X      |        |        |        |        |
+| `eval-bad-eval`        |      | X    |        |        | X      |        |        |        |
+| `eval-bad-lambda-call` |      | X    |        |        |        |        |        | X      |
+| `eval-bad-lambda`      |      | X    |        |        |        | X      |        |        |
+| `eval-bad-quote`       |      | X    | X      |        |        |        |        |        |
+| `eval-cond`            |      | X    |        | X      |        |        |        |        |
+| `eval-define`          |      | X    |        |        |        |        | X      |        |
+| `eval-environment`     | X    |      |        |        |        |        |        |        |
+| `eval-eval`            |      | X    |        |        | X      |        |        |        |
+| `eval-lambda-call`     |      | X    |        |        |        |        |        | X      |
+| `eval-lambda`          |      | X    |        |        |        | X      |        |        |
+| `eval-nil`             | X    |      |        |        |        |        |        |        |
+| `eval-non-list`        | X    |      |        |        |        |        |        |        |
+| `eval-number`          | X    |      |        |        |        |        |        |        |
+| `eval-primitive`       | X    |      |        |        |        |        |        |        |
+| `eval-quote`           |      | X    | X      |        |        |        |        |        |
+| `eval-symbol`          | X    |      |        |        |        |        |        |        |
 
 ## 2.3. Testavimo atvejai ir rezultatai
 

@@ -162,11 +162,7 @@ Define takes exactly two arguments, of which the first one must be a symbol. It 
 (define a '(1 2 3))
 ```
 
-### 3.3.6. Evaluating primitive calls
-
-Primitive functions take a list of arguments and give some result. Their behaviour is listed in the list below.
-
-### 3.3.7. Evaluating lambda calls
+### 3.3.4. Evaluating lambda calls
 
 First, an argument list is matched against given parameters:
 * If parameter list is Nil, it matches empty parameter list.
@@ -180,6 +176,10 @@ If there is a mismatch, an error is reported.
 The environment stored in 4th element is extended with matches. If same symbol is matched multiple times, it must get the value from the right-most match.
 
 Then the body is evaluated with this new extended environment, and returned as a result.
+
+### 3.3.7. Evaluating primitive calls
+
+Primitive functions take a list of arguments and give some result. Their behaviour is listed section "Built-in primitives".
 
 ## 4. Built-in primitives
 
