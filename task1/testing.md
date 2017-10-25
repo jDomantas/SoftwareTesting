@@ -1,22 +1,22 @@
-# 1. Įvadas
+# Įvadas
 
-Darbo tikslas yra ištestuoti mini-lisp programavimo kalbos interpretatorių. Šiame dokumente yra aprašytas testavimo procesas ir pateikti testavimo rezultatai.
+Darbo tikslas yra ištestuoti mini-lisp programavimo kalbos interpretatorių. Šiame dokumente aprašomi pagal specifikaciją sudaryti testavimo atvejai, testų vykdymo rezultatai, ir aprašomi testavimo metu rasti defektai.
 
 Testuojamas interpretatorius yra trumpai aprašytas [python-mini-lisp.md](mini-lisp/python-mini-lisp.md), mini-lisp specifikacija: [spec.md](mini-lisp/spec.md).
 
 Interpretatorius bus testuojamas juodos dėžės principu. Jam bus pateikiami mini-lisp termai, ir išvedami termai bus lyginami su specifikacijos nusakomu rezultatu. Kadangi interpretatoriaus vartotojo sąsaja yra labai praprasta, testai yra automatizuoti. Testas yra aprašomas paprastu formatu kaip sąrašas įvesčių ir norimų rezultatų. Testams paleisti naudojama trumpa Python programėlė kuri nuskaito testus, paleidžia interpretatorių, suveda testo įvestis, palygina išvestis, ir praneša rezultatus.
 
-Siekiant sumažinti darbo apimtį, testuojamas tik programų vykdymas (specifikacijos skyrius `3. Evaluation`). Testavimo tikslams likusi specifikacijos dalis (sintaksė ir esamos primityvios operacijos) yra laikoma realizuota teisingai.
+Šiame darbe testuojamas tik programų vykdymas (trečias specifikacijos skyrius - "Evaluation"). Testavimo tikslams likusi specifikacijos dalis (sintaksė ir primityvios operacijos) yra laikoma realizuota teisingai.
 
-# 2. Interpretatoriaus testavimas
+# 1. Interpretatoriaus testavimas
 
-## 2.1. Reikalavimai
+## 1.1. Reikalavimai
 
 Interpretatorius yra testuojamas pagal specifikaciją, neišrašant atskirai detalių reikalavimų. Testavimo atvejai yra parašyti pagal specifikacijos punktus. Testavimo atvejuose kuriuose tikimasi kad interpretatorius praneš klaidą, koks yra konkretus klaidos pranešimas nėra tikrinama - kai tikimasi klaidos pranešimo, išvestis bus laikoma teisinga jei interpretatorius praneš bet kokią klaidą.
 
-## 2.2. Atsekamumo matrica
+## 1.2. Atsekamumo matrica
 
-Pateikiama lentelė nurodo kuriuos specifikacijos skyrius atitinka kurie testai.
+Pateikiama lentelė nurodo kurie testai atitinka kuriuos specifikacijos skyrius.
 
 | Testas                 | 3.1. | 3.2. | 3.3.1. | 3.3.2. | 3.3.3. | 3.3.4. | 3.3.5. | 3.3.6. |
 | ---------------------- |:----:|:----:|:------:|:------:|:------:|:------:|:------:|:------:|
@@ -38,7 +38,7 @@ Pateikiama lentelė nurodo kuriuos specifikacijos skyrius atitinka kurie testai.
 | `eval-quote`           |      | X    | X      |        |        |        |        |        |
 | `eval-symbol`          | X    |      |        |        |        |        |        |        |
 
-## 2.3. Testavimo atvejai ir rezultatai
+## 1.3. Testavimo atvejai ir rezultatai
 
 Testavimo atvejo id sudarytas pagal testuojamą kalbos elementą.
 
@@ -178,7 +178,7 @@ Testavimo atvejo id sudarytas pagal testuojamą kalbos elementą.
 | Rezultatai | <code><builtin +><br/><builtin eq?></code> |
 | Būsena | Išvestis teisinga |
 
-## 2.4. Defektų sąrašas
+## 1.4. Defektų sąrašas
 
 Defekto ID sudaromas pagal taisyklę D+XX, kur XX - defekto numeris.
 
@@ -203,13 +203,13 @@ Pagal poveikį interpretatoriaus naudojimui defektai suskirstyti į:
 | ---------- | --------- | ------ | -------------- |
 | `D-04`     | Interpretatorius nulūžta bandant įvykdyti "primitive" termą, vietoj to kad būtų išspausdintas klaidos pranešimas. | eval-primitive | Svarbus |
 
-## 3. Rezultatai ir išvados
+## 2. Rezultatai ir išvados
 
-Testuojant interpretatorių buvo atlikti 17 testavimo atvejų. Buvo rasti du kritiniai defektai `D-01` ir `D-02`.
+Pagal specifikaciją buvo sudaryti ir atlikti 17 testavimo atvejų. Rasti du kritiniai defektai `D-01` ir `D-02`, bei du svarbūs defektai - `D-03` ir `D-04`.
 
 Testuotas interpretatorių sunku naudoti kol nebus ištaisyti du kritiniai defektai, nes interpretatorius neatitinka specifikacijos. Likę defektai `D-03` ir `D-04` nėra kritiniai, su jais susidūrus jie tikrai bus pastebėti.
 
-## 4. Priedai
+## 3. Priedai
 
 Trumpas interpretatoriaus aprašymas: [python-mini-lisp.md](mini-lisp/python-mini-lisp.md).
 
