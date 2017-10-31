@@ -207,7 +207,7 @@ Pagal poveikį interpretatoriaus naudojimui defektai suskirstyti į:
 
 Pagal specifikaciją buvo sudaryti ir atlikti 17 testavimo atvejų. Rasti du kritiniai defektai `D-01` ir `D-02`, bei du svarbūs defektai - `D-03` ir `D-04`.
 
-Testuotas interpretatorių sunku naudoti kol nebus ištaisyti du kritiniai defektai, nes interpretatorius neatitinka specifikacijos. Likę defektai `D-03` ir `D-04` nėra kritiniai, su jais susidūrus jie tikrai bus pastebėti.
+Testuotas interpretatorių sunku naudoti kol nebus ištaisyti du kritiniai defektai, nes interpretatoriaus gaunami rezultatai neatitinka specifikacijos reikalavimų. Likę defektai `D-03` ir `D-04` nėra kritiniai, su jais susidūrus jie tikrai bus pastebėti.
 
 ## 3. Priedai
 
