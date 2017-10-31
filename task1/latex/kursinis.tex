@@ -1,0 +1,182 @@
+\documentclass{VUMIFPSkursinis}
+\usepackage{algorithmicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{subfig}
+\usepackage{wrapfig}
+
+\usepackage{enumitem}
+%PAKEISTA, tarpai tarp sąrašo elementų
+\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+\setenumerate{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+
+% Titulinio aprašas
+\university{Vilniaus universitetas}
+\faculty{Matematikos ir informatikos fakultetas}
+\department{Programų sistemų katedra}
+\papertype{Kursinis darbas}
+\title{Programų sistemų testavimas}
+\status{3 kurso 3 grupės studentas}
+\author{Domantas Jadenkus}
+% \secondauthor{Vardonis Pavardonis}   % Pridėti antrą autorių
+\supervisor{prof. habil. dr. Vardaitis Pavardaitis}
+\date{Vilnius – 2017}
+
+% Nustatymai
+% \setmainfont{Palemonas}   % Pakeisti teksto šriftą į Palemonas (turi būti įdiegtas sistemoje)
+\bibliography{bibliografija}
+
+\begin{document}
+	
+% PAKEISTA	
+\maketitle
+\cleardoublepage\pagenumbering{arabic}
+\setcounter{page}{2}
+
+%TURINYS
+\tableofcontents
+
+\sectionnonum{Įvadas}
+Darbo tikslas yra ištestuoti mini-lisp programavimo kalbos interpretatorių. Šiame dokumente aprašomi pagal specifikaciją sudaryti testavimo atvejai, testų vykdymo rezultatai, ir aprašomi testavimo metu rasti defektai.
+
+Testuojamas interpretatorius yra trumpai aprašytas [python-mini-lisp.md](mini-lisp/python-mini-lisp.md), mini-lisp specifikacija: [spec.md](mini-lisp/spec.md).
+
+Interpretatorius bus testuojamas juodos dėžės principu. Jam bus pateikiami mini-lisp termai, ir išvedami termai bus lyginami su specifikacijos nusakomu rezultatu. Kadangi interpretatoriaus vartotojo sąsaja yra labai praprasta, testai yra automatizuoti. Testas yra aprašomas paprastu formatu kaip sąrašas įvesčių ir norimų rezultatų. Testams paleisti naudojama trumpa Python programėlė kuri nuskaito testus, paleidžia interpretatorių, suveda testo įvestis, palygina išvestis, ir praneša rezultatus.
+
+Šiame darbe testuojamas tik programų vykdymas (trečias specifikacijos skyrius - "Evaluation"). Testavimo tikslams likusi specifikacijos dalis (sintaksė ir primityvios operacijos) yra laikoma realizuota teisingai.
+
+
+\section{Interpretatoriaus testavimas}
+
+\subsection{Reikalavimai}
+
+Interpretatorius yra testuojamas pagal specifikaciją, neišrašant atskirai detalių reikalavimų. Testavimo atvejai yra parašyti pagal specifikacijos punktus. Testavimo atvejuose kuriuose tikimasi kad interpretatorius praneš klaidą, koks yra konkretus klaidos pranešimas nėra tikrinama - kai tikimasi klaidos pranešimo, išvestis bus laikoma teisinga jei interpretatorius praneš bet kokią klaidą.
+
+
+\subsection{Atsekamumo matrica}
+
+Pateikiama lentelė nurodo kurie testai atitinka kuriuos specifikacijos skyrius.
+
+\begin{table}[H]\footnotesize
+  \centering
+  \caption{Specifikacijos ir testavimo atvejų atsekamumo matrica}
+  {\begin{tabular}{|l|c|c|c|c|c|c|c|c|} \hline
+    Testas & 3.1. & 3.2. & 3.3.1. & 3.3.2. & 3.3.3. & 3.3.4. & 3.3.5. & 3.3.6. \\
+    \hline
+    eval-bad-cond        &   & X &   & X &   &   &   &    \\
+    eval-bad-eval        &   & X &   &   & X &   &   &    \\
+    eval-bad-lambda-call &   & X &   &   &   &   &   & X  \\
+    eval-bad-lambda      &   & X &   &   &   & X &   &    \\
+    eval-bad-quote       &   & X & X &   &   &   &   &    \\
+    eval-cond            &   & X &   & X &   &   &   &    \\
+    eval-define          &   & X &   &   &   &   & X &    \\
+    eval-environment     & X &   &   &   &   &   &   &    \\
+    eval-eval            &   & X &   &   & X &   &   &    \\
+    eval-lambda-call     &   & X &   &   &   &   &   & X  \\
+    eval-lambda          &   & X &   &   &   & X &   &    \\
+    eval-nil             & X &   &   &   &   &   &   &    \\
+    eval-non-list        & X &   &   &   &   &   &   &    \\
+    eval-number          & X &   &   &   &   &   &   &    \\
+    eval-primitive       & X &   &   &   &   &   &   &    \\
+    eval-quote           &   & X & X &   &   &   &   &    \\
+    eval-symbol          & X &   &   &   &   &   &   &    \\
+    \hline
+  \end{tabular}}
+  \label{tab:table example}
+\end{table}
+
+
+\subsection{Testavimo atvejai ir jų rezultatai}
+
+Testavimo atvejo id sudarytas pagal testuojamą kalbos elementą.
+
+TODO: lentelės
+
+
+\subsection{Defektų sąrašas}
+
+Defekto ID sudaromas pagal taisyklę D-XX, kur XX - defekto numeris.
+
+Pagal poveikį interpretatoriaus naudojimui defektai suskirstyti į:
+
+\begin{enumerate}
+	\item Kritinis - defektas neleidžia naudotis esminėmis interpretatoriaus funkcijomis.
+	\item Svarbus - defektas įtakoja esmines funkcijas, bet juo naudotis iš esmės galima.
+  \item Nesvarbus - defektas turi mažai įtakos interpretatoriaus naudojimui.
+\end{enumerate}
+
+\begin{table}[H]\footnotesize
+  \centering
+  {\begin{tabular}{|c|l|c|c|} \hline
+    Defekto ID & Defekto aprašas & Testavimo atvejis & Defekto svarba  \\
+    \hline
+    D-01 & Interpretatorius nepraneša klaidos kai vykdoma bloga "cond" išraiška. & eval-bad-cond & Kritinis \\
+    \hline
+  \end{tabular}}
+  \label{tab:table example}
+\end{table}
+
+\begin{table}[H]\footnotesize
+  \centering
+  {\begin{tabular}{|c|l|c|c|} \hline
+    Defekto ID & Defekto aprašas & Testavimo atvejis & Defekto svarba  \\
+    \hline
+    D-02 & Grąžinamas neteisingas rezultatas vykdant "define" išraišką. & eval-define & Kritinis \\
+    \hline
+  \end{tabular}}
+  \label{tab:table example}
+\end{table}
+
+\begin{table}[H]\footnotesize
+  \centering
+  {\begin{tabular}{|c|l|c|c|} \hline
+    Defekto ID & Defekto aprašas & Testavimo atvejis & Defekto svarba  \\
+    \hline
+    D-03 & Interpretatorius nulūžta bandant įvykdyti "environment" termą, vietoj to kad būtų išspausdintas klaidos pranešimas. & eval-env & Svarbus \\
+    \hline
+  \end{tabular}}
+  \label{tab:table example}
+\end{table}
+
+\begin{table}[H]\footnotesize
+  \centering
+  {\begin{tabular}{|c|l|c|c|} \hline
+    Defekto ID & Defekto aprašas & Testavimo atvejis & Defekto svarba  \\
+    \hline
+    D-01 & Interpretatorius nulūžta bandant įvykdyti "primitive" termą, vietoj to kad būtų išspausdintas klaidos pranešimas. & eval-primitive & Svarbus \\
+    \hline
+  \end{tabular}}
+  \label{tab:table example}
+\end{table}
+
+
+\section{Rezultatai ir išvados}
+
+Pagal specifikaciją buvo sudaryti ir atlikti 17 testavimo atvejų. Rasti du kritiniai defektai D-01 ir D-02, bei du svarbūs defektai - D-03 ir D-04.
+
+Testuotas interpretatorių sunku naudoti kol nebus ištaisyti du kritiniai defektai, nes interpretatoriaus gaunami rezultatai neatitinka specifikacijos reikalavimų. Likę defektai D-03 ir D-04 nėra kritiniai, su jais susidūrus jie tikrai bus pastebėti.
+
+
+%% PAKEISTAS PAVADINIMAS Į 'Šaltiniai'
+\printbibliography[heading=bibintoc, title=Šaltiniai]  % Šaltinių sąraše nurodoma panaudota
+% literatūra, kitokie šaltiniai. Abėcėlės tvarka išdėstomi darbe panaudotų
+% (cituotų, perfrazuotų ar bent paminėtų) mokslo leidinių, kitokių publikacijų
+% bibliografiniai aprašai.  Šaltinių sąrašas spausdinamas iš naujo puslapio.
+% Aprašai pateikiami netransliteruoti. Šaltinių sąraše negali būti tokių
+% šaltinių, kurie nebuvo paminėti tekste.
+
+\appendix  % Priedai
+% Prieduose gali būti pateikiama pagalbinė, ypač darbo autoriaus savarankiškai
+% parengta, medžiaga. Savarankiški priedai gali būti pateikiami ir
+% kompaktiniame diske. Priedai taip pat numeruojami ir vadinami. Darbo tekstas
+% su priedais susiejamas nuorodomis.
+
+\end{document}
